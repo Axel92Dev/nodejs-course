@@ -1,30 +1,18 @@
 'use strict'
-const fastify = require('fastify')()
-const createTimeSeries = require('@axel92/time-series')
 
-fastify.register(require('fastify-mongodb'), {
-  url: 'mongodb://localhost:27017/timeseries'
-}).after(() => {
-  const { db } = fastify.mongo
-  const timeSeries = createTimeSeries(db)
+function start (opts, callback = () => {}) {
+  const fastify = require('fastify')()
 
-  fastify.post('/datapoints', async (request, reply) => {
-    const payload = request.body
-    const code = await timeSeries.addDataPoint(payload.data, payload.instant)
-    reply.send({ code })
+  fastify.register(require('fastify-mongodb'), {
+    url: 'mongodb://localhost:27017/timeseries'
   })
+  fastify.register(require('./datapoints'), { prefix: '/datapoints' })
 
-  fastify.get('/datapoints/:code', async (request, reply) => {
-    const res = await timeSeries.fetchDataPoint(request.params.code)
-
-    reply.send(res)
-  })
-})
-
-function start (opts, callback) {
   fastify.listen(3000, (err) => {
     callback(err, fastify)
   })
+
+  return { fastify }
 }
 
-module.exports = { start, fastify }
+module.exports = { start }

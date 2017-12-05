@@ -1,10 +1,12 @@
 'use strict'
 const t = require('tap')
 const test = t.test
-const fastify = require('../index').fastify
+const { start } = require('../index')
 
 test('GET /datapoint/:id returns a single data point', async t => {
   t.plan(2)
+
+  const { fastify } = start()
 
   const payload = {
     data: 'ciao',
