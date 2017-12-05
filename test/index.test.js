@@ -1,3 +1,4 @@
+'use strict'
 const t = require('tap')
 const test = t.test
 const fastify = require('../index').fastify
