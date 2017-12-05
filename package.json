@@ -9,10 +9,12 @@
   "author": "",
   "license": "UNLICENSED",
   "dependencies": {
-    "@axel92/time-series": "^0.1.0",
-    "fastify": "^0.35.3"
+    "@axel92/time-series": "^0.2.0",
+    "fastify": "^0.35.3",
+    "fastify-mongodb": "^0.3.0"
   },
   "devDependencies": {
+    "mongodb": "^2.2.33",
     "request": "^2.83.0",
     "standard": "^10.0.3",
     "tap": "^11.0.0"
